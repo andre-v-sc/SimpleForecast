@@ -11,7 +11,7 @@
 
 {% if api %}
     {% if api == "Error..." %}
-        There was an error, please try again...
+        <p>There was an error, please try again...</p>
     {% else %}
 
     <div class="jumbotron {{ category_color }}">
@@ -19,14 +19,9 @@
         <p class="lead">Current Air Quality: {{ api.0.AQI }}</h1></p>
         <p class="lead">Location: {{ api.0.ReportingArea }}, {{ api.0.StateCode }}</p>
         
-        <p>{{ category_description }}
-<br/>
-
-    {% endif %}
+        <p>{{ category_description }}</p>
+    </div>
 {% endif %}
-
-
-
-
+{% endif %}
 {% endblock %}
 

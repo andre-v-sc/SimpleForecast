@@ -1,10 +1,14 @@
+# Importing necessary modules
 from django.shortcuts import render
 
+# Defining view function called "home"
 def home(request):
     import json
     import requests
 
+    # checking if the request method is POST
     if request.method == "POST":
+        # Getting 'zip' value from the request
         zip = request.POST['zip']
         api_request = requests.get("https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=" + zip + "&distance=5&API_KEY=2016116F-EA63-4ABC-ACA0-0EBB2C79EA16")
 
@@ -14,6 +18,7 @@ def home(request):
         except Exception as e:
             api = "Error..."
 
+        # Determining the category of air quality based on API response
         if api[0]['Category']['Name'] == "Good":
             category_description = "(0 - 50) Air quality is satisfactory, and air pollution poses little or no risk."
             category_color = "good"
@@ -37,7 +42,7 @@ def home(request):
             'api' : api, 
             'category_description': category_description, 
             'category_color': category_color
-            })
+        })
 
 
     else:
