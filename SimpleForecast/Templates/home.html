@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% block content %}
-
-<h1>SimpleForecast</h1>
 <br/>
 
 {% if zip %}
@@ -14,7 +13,7 @@
         <p>There was an error, please try again...</p>
     {% else %}
 
-    <div class="jumbotron {{ category_color }}">
+    <div class="jumbotron {% if category_color %}{{ category_color }}{% endif %}">
         <h1 class="display-4">{{ api.0.Category.Name }}<br/><br/>
         <p class="lead">Current Air Quality: {{ api.0.AQI }}</h1></p>
         <p class="lead">Location: {{ api.0.ReportingArea }}, {{ api.0.StateCode }}</p>
@@ -24,4 +23,3 @@
 {% endif %}
 {% endif %}
 {% endblock %}
-
