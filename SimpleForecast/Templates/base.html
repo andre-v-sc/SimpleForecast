@@ -1,74 +1,98 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags for proper rendering and responsiveness-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS for styling and layout-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags for proper rendering and responsiveness-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- webpage title-->
-    <title>SimpleForecast</title>
-    <!-- Custom CSS styles for air quality categories -->
-    <style>
-      .good {background-color: #00E400;}
-      .moderate {background-color: #FFFF00;}
-      .usg {background-color: #FF7E00;}
-      .unhealthy {background-color: #FF0000;}
-      .veryunhealthy {background-color: #8F3F97;}
-      .hazardous {background-color: #7E0023;}
+  <!-- Bootstrap CSS for styling and layout-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-      .logo-image {
-    max-width: 150px;
-    height: auto;
-}
+  <!-- webpage title-->
+  <title>SimpleForecast</title>
+  <!-- Custom CSS styles for air quality categories -->
+  <style>
+    .good {
+      background-color: #00E400;
+    }
 
-.navbar {
-    padding-top: 0.01rem;
-    padding-bottom: 0.01rem;
-  }
-    </style>
+    .moderate {
+      background-color: #FFFF00;
+    }
 
+    .usg {
+      background-color: #FF7E00;
+    }
 
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'images/logo_transparent.png' %}" alt="SimpleForecast" class="logo-image">
-          SimpleForecast
-      </a>      
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About Us</a>
-            </li>
-          </ul>
-          <!-- Search form to submit a zip code -->
-          <form action="{% url 'home' %}" class="form-inline ml-auto" role="search" method="POST">
-              {% csrf_token %}
-            <input class="form-control mr-sm-2" type="search" placeholder="Enter Zip Code" aria-label="Search" name="zip">
-            <button class="btn btn-primary my-2 my-sm-0" type="submit">Lookup</button>
-          </form>
-        </div>
+    .unhealthy {
+      background-color: #FF0000;
+    }
+
+    .veryunhealthy {
+      background-color: #8F3F97;
+    }
+
+    .hazardous {
+      background-color: #7E0023;
+    }
+
+    .logo-image {
+      max-width: 100px;
+      height: auto;
+    }
+
+    .navbar {
+      padding-top: 0.1rem;
+      padding-bottom: 0.1rem;
+    }
+
+    .search-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- Navigation bar with logo, about link, and search form -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!--logo and title -->
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'images/logo_transparent.png' %}" alt="SimpleForecast" class="logo-image">
+        SimpleForecast
+      </a>
+      <!-- Search form to submit a zip code -->
+      <div class="search-container">
+        <form action="{% url 'home' %}" class="form-inline" role="search" method="POST">
+          {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" placeholder="Enter Zip Code" aria-label="Search" name="zip">
+          <button class="btn btn-primary my-2 my-sm-0" type="submit">🔎</button>
+        </form>
       </div>
-    </nav>
-    <br/>
-    <div class="container">
-        {% block content %}
-
-
-        {% endblock %}
+      <!-- Navigation links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <!-- About Us link -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About Us</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+  </nav>
+
+  <!-- Main content container -->
+  <div class="container">
+    {% block content %}
+
+    {% endblock %}
+  </div>
+</body>
+
 </html>

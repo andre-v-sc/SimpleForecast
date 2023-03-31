@@ -1,25 +1,30 @@
+<!-- Extends the base template -->
 {% extends 'base.html' %}
 
+<!-- Loads the static files, such as CSS and JavaScript -->
 {% load static %}
+
+<!-- Defines the content block to be used in the base template -->
 {% block content %}
-<br/>
+<br />
 
-{% if zip %}
-    {{  zip }}
-{% endif %}
-
-{% if api %}
-    {% if api == "Error..." %}
-        <p>There was an error, please try again...</p>
+<!-- Display jumbotron with category color, if available -->
+<div class="jumbotron {% if category_color in 'good,moderate,usg,unhealthy,veryunhealthy,hazardous' %} {{ category_color }}{% endif %}"
+    style="border: 1px solid; text-align: center;">
+    {% if api %}
+    <!-- Display category name -->
+    <h1 class="display-4">{{ api.0.Category.Name }}</h1>
+    <!-- Display current air quality index -->
+    <p class="lead">Current Air Quality: {{ api.0.AQI }}</p>
+    <!-- Display reporting area and state code -->
+    <p class="lead">Location: {{ api.0.ReportingArea }}, {{ api.0.StateCode }}</p>
+    <!-- Display category description -->
+    <p>{{ category_description }}</p>
     {% else %}
+    <!-- Display error message -->
+    <p>{{ category_description }}</p>
+    {% endif %}
+</div>
 
-    <div class="jumbotron {% if category_color %}{{ category_color }}{% endif %}">
-        <h1 class="display-4">{{ api.0.Category.Name }}<br/><br/>
-        <p class="lead">Current Air Quality: {{ api.0.AQI }}</h1></p>
-        <p class="lead">Location: {{ api.0.ReportingArea }}, {{ api.0.StateCode }}</p>
-        
-        <p>{{ category_description }}</p>
-    </div>
-{% endif %}
-{% endif %}
+<!-- End of content block -->
 {% endblock %}

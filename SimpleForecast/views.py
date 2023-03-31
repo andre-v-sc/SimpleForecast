@@ -1,6 +1,9 @@
+# Import render function and required libraries from Django
 from django.shortcuts import render
 import json
 import requests
+
+# Function to determine air quality category based on AQI value
 
 
 def get_category_data(aqi):
@@ -19,33 +22,46 @@ def get_category_data(aqi):
 
     return None, None
 
+# Home view function
+
 
 def home(request):
+    # Check if request method is POST
     if request.method == "POST":
         zip = request.POST['zip']
-        api_request = requests.get("https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=" + zip + "&distance=5&API_KEY=2016116F-EA63-4ABC-ACA0-0EBB2C79EA16")
+        api_request = requests.get("https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=" + zip + "&distance=30&API_KEY=2016116F-EA63-4ABC-ACA0-0EBB2C79EA16")
     else:
-        api_request = requests.get("https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=19087&distance=5&API_KEY=2016116F-EA63-4ABC-ACA0-0EBB2C79EA16")
+        # Default API request -- Cabrini
+        api_request = requests.get(
+            "https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=19087&distance=30&API_KEY=2016116F-EA63-4ABC-ACA0-0EBB2C79EA16")
+        zip = "19087"
 
+    # Load API response into JSON format
     try:
         api = json.loads(api_request.content)
     except Exception as e:
-        api = "Error..."
+        api = None
 
-    if api and api != "Error...":
+    # Process API response if available and if not an error
+    if api:
         aqi = api[0]['AQI']
         category_color, category_description = get_category_data(aqi)
-        print("AQI:", aqi, "Color:", category_color, "Description:", category_description)
+        print("AQI:", aqi, "Color:", category_color,
+              "Description:", category_description)
     else:
         category_color = "no-data"
         category_description = "No data available for the provided zip code."
 
+    # Render home.html with necessary context
     return render(request, 'home.html', {
         'api': api,
         'category_description': category_description,
-        'category_color': category_color
+        'category_color': category_color,
+        'zip': zip
     })
 
+
+# About view function
 
 def about(request):
     return render(request, 'about.html', {})
