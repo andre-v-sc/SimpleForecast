@@ -15,7 +15,7 @@
     <!-- Display category name -->
     <h1 class="display-4">{{ api.0.Category.Name }}</h1>
     <!-- Display current air quality index -->
-    <p class="lead">Current Air Quality: {{ api.0.AQI }}</p>
+    <p class="lead">Current Air Quality Index (AQI): {{ api.0.AQI }}</p>
     <!-- Display reporting area and state code -->
     <p class="lead">Location: {{ api.0.ReportingArea }}, {{ api.0.StateCode }}</p>
     <!-- Display category description -->
@@ -23,6 +23,7 @@
     {% else %}
     <!-- Display error message -->
     <p>{{ category_description }}</p>
+    
     {% endif %}
 </div>
 
