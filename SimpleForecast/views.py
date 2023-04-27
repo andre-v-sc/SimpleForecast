@@ -22,7 +22,6 @@ def get_category_data(aqi):
     return None, None
 
 # Home view function
-
 def home(request, zip=None):
     if zip is None:
         # Use default zip code if none is provided
