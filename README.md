@@ -29,7 +29,7 @@ Activate the virtual environment by running the appropriate command for your ope
 - **Windows:**
 
   ```
-  venv\Scripts\activate
+  venv\scripts\activate
   ```
 
 - **macOS/Linux:**
