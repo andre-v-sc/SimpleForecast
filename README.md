@@ -1,3 +1,4 @@
+Markdown
 ---
 
 ## Installation Guide for SimpleForecast
