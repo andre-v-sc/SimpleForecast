@@ -1,5 +1,3 @@
-Here are the installation instructions in Markdown format:
-
 ---
 
 ## Installation Guide for SimpleForecast
